@@ -3,7 +3,7 @@
 Última atualização: 26 de novembro de 2025
 
 A sua privacidade é importante para nós!
-Esta Política de Privacidade explica como o aplicativo Rhytmo coleta, usa e protege suas informações.
+Esta Política de Privacidade explica como o app Rhytmo coleta, usa e protege suas informações.
 
 Ao utilizar o Rhytmo, você concorda com as práticas descritas aqui.
 
