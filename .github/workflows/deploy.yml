@@ -41,6 +41,20 @@ jobs:
         if: hashFiles('CNAME') != ''
         run: cp CNAME release/platforms/web/build/CNAME
 
+      - name: Create .nojekyll file
+        run: touch release/platforms/web/build/.nojekyll
+
+      - name: Verify no HTTP references in code
+        working-directory: release/platforms/web/build
+        run: |
+          # Check for HTTP URLs in JS/CSS/HTML files (excluding comments and documentation)
+          if find . -type f \( -name "*.js" -o -name "*.css" -o -name "*.html" \) -exec grep -l "http://" {} \; 2>/dev/null | grep -v ".map" | head -1; then
+            echo "Error: Found HTTP references in build output"
+            echo "Please ensure all URLs use HTTPS"
+            exit 1
+          fi
+          echo "✓ No HTTP references found in code files"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
