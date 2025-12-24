@@ -1,4 +1,4 @@
-import { Play, Pause, Plus, Minus } from 'lucide-react';
+import { Play, Pause, Plus, Minus, Volume2 } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { PomodoroIndicator } from './PomodoroIndicator';
 
@@ -11,6 +11,8 @@ export function Metronome() {
     beat,
     beatsPerMeasure,
     setBeatsPerMeasure,
+    metronomeVolume,
+    setMetronomeVolume,
   } = useAppContext();
 
   const handleBpmChange = (delta: number) => {
@@ -83,8 +85,8 @@ export function Metronome() {
           <button
             onClick={togglePlay}
             className={`w-32 h-32 rounded-full flex items-center justify-center shadow-2xl transition-all ${isMetronomeRunning
-                ? 'bg-[#FF635C] hover:bg-[#FF635C]/90 shadow-[#FF635C]/30'
-                : 'bg-[#256DFF] hover:bg-[#256DFF]/90 shadow-[#256DFF]/30'
+              ? 'bg-[#FF635C] hover:bg-[#FF635C]/90 shadow-[#FF635C]/30'
+              : 'bg-[#256DFF] hover:bg-[#256DFF]/90 shadow-[#256DFF]/30'
               }`}
           >
             {isMetronomeRunning ? (
@@ -109,10 +111,10 @@ export function Metronome() {
                 <div
                   key={i}
                   className={`w-14 h-14 rounded-full transition-all duration-100 ${isMetronomeRunning && i === beat
-                      ? i === 0
-                        ? 'bg-[#FF635C] scale-110 shadow-lg shadow-[#FF635C]/50'
-                        : 'bg-[#256DFF] scale-110 shadow-lg shadow-[#256DFF]/50'
-                      : 'bg-[#0C1020]'
+                    ? i === 0
+                      ? 'bg-[#FF635C] scale-110 shadow-lg shadow-[#FF635C]/50'
+                      : 'bg-[#256DFF] scale-110 shadow-lg shadow-[#256DFF]/50'
+                    : 'bg-[#0C1020]'
                     }`}
                 />
               ))}
@@ -127,8 +129,8 @@ export function Metronome() {
                     key={beats}
                     onClick={() => setBeatsPerMeasure(beats)}
                     className={`px-6 py-3 rounded-lg transition-all ${beatsPerMeasure === beats
-                        ? 'bg-[#256DFF] text-white'
-                        : 'bg-[#0C1020] text-[#B4BACB] hover:bg-[#256DFF]/20'
+                      ? 'bg-[#256DFF] text-white'
+                      : 'bg-[#0C1020] text-[#B4BACB] hover:bg-[#256DFF]/20'
                       }`}
                   >
                     {beats}/4
@@ -189,10 +191,10 @@ export function Metronome() {
               <div
                 key={i}
                 className={`w-10 h-10 rounded-full transition-all duration-100 ${isMetronomeRunning && i === beat
-                    ? i === 0
-                      ? 'bg-[#FF635C] scale-110'
-                      : 'bg-[#256DFF] scale-110'
-                    : 'bg-[#0C1020]'
+                  ? i === 0
+                    ? 'bg-[#FF635C] scale-110'
+                    : 'bg-[#256DFF] scale-110'
+                  : 'bg-[#0C1020]'
                   }`}
               />
             ))}
@@ -217,8 +219,8 @@ export function Metronome() {
           <button
             onClick={togglePlay}
             className={`w-20 h-20 rounded-full flex items-center justify-center shadow-lg transition-all ${isMetronomeRunning
-                ? 'bg-[#FF635C] hover:bg-[#FF635C]/90'
-                : 'bg-[#256DFF] hover:bg-[#256DFF]/90'
+              ? 'bg-[#FF635C] hover:bg-[#FF635C]/90'
+              : 'bg-[#256DFF] hover:bg-[#256DFF]/90'
               }`}
           >
             {isMetronomeRunning ? (
@@ -228,7 +230,20 @@ export function Metronome() {
             )}
           </button>
         </div>
+        {/* Volume Control */}
+        <div className="flex items-center gap-4 w-64">
+          <Volume2 className="w-5 h-5 text-[#B4BACB]" />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={metronomeVolume}
+            onChange={(e) => setMetronomeVolume(parseInt(e.target.value))}
+            className="w-full accent-[#256DFF]"
+          />
+        </div>
       </div>
+
     </>
   );
 }

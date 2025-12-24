@@ -11,6 +11,8 @@ interface AppContextType {
   beat: number;
   beatsPerMeasure: number;
   setBeatsPerMeasure: (beats: number) => void;
+  metronomeVolume: number;
+  setMetronomeVolume: (volume: number) => void;
 
   // Pomodoro state
   pomodoroTimeLeft: number;
@@ -43,6 +45,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [isMetronomeRunning, setIsMetronomeRunning] = useState(false);
   const [beat, setBeat] = useState(0);
   const [beatsPerMeasure, setBeatsPerMeasure] = useState(4);
+  const [metronomeVolume, setMetronomeVolume] = useState(50);
 
   // Pomodoro state
   const [workMinutes, setWorkMinutes] = useState(25);
@@ -181,7 +184,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     gainNode.connect(ctx.destination);
 
     oscillator.frequency.value = isAccent ? 1000 : 800;
-    gainNode.gain.value = isAccent ? 0.3 : 0.2;
+    oscillator.frequency.value = isAccent ? 1000 : 800;
+
+    // Calculate gain based on volume (0-100)
+    // Base gain: Accent 0.3, Normal 0.2
+    const baseGain = isAccent ? 0.3 : 0.2;
+    // Apply volume curve (using linear for simplicity, can use logarithmic if needed)
+    gainNode.gain.value = baseGain * (metronomeVolume / 100);
 
     oscillator.start(ctx.currentTime);
     oscillator.stop(ctx.currentTime + 0.05);
@@ -213,6 +222,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setLongBreakMinutes,
     sessionsBeforeLongBreak,
     setSessionsBeforeLongBreak,
+    metronomeVolume,
+    setMetronomeVolume,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
