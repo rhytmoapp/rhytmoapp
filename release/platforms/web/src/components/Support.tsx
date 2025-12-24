@@ -1,4 +1,4 @@
-import { Mail, MessageSquare, Github } from 'lucide-react';
+import { Mail, MessageSquare, Github, Lightbulb } from 'lucide-react';
 
 export function Support() {
     return (
@@ -12,7 +12,7 @@ export function Support() {
                         </div>
                         <h2 className="text-3xl font-bold text-white mb-4">Contact Support</h2>
                         <p className="text-[#B4BACB] text-lg">
-                            Have questions or suggestions? We're here to help!
+                            Have questions, suggestions, or found a bug? We're here to help!
                         </p>
                     </div>
 
@@ -32,7 +32,7 @@ export function Support() {
                         </a>
 
                         <a
-                            href="https://github.com/rhytmoapp/rhytmoapp.github.io/issues"
+                            href="https://github.com/rhytmoapp/rhytmoapp.github.io/issues/new?labels=bug&template=bug_report.md"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-6 p-6 rounded-2xl bg-[#0C1020] hover:bg-[#0C1020]/80 border border-[#256DFF]/10 transition-all group"
@@ -45,6 +45,22 @@ export function Support() {
                                 <p className="text-[#B4BACB]">Found a bug? Let us know!</p>
                             </div>
                             <div className="text-[#256DFF]">GitHub Issues</div>
+                        </a>
+
+                        <a
+                            href="https://github.com/rhytmoapp/rhytmoapp.github.io/issues/new?labels=enhancement&template=feature_request.md"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-6 p-6 rounded-2xl bg-[#0C1020] hover:bg-[#0C1020]/80 border border-[#256DFF]/10 transition-all group"
+                        >
+                            <div className="w-12 h-12 rounded-full bg-[#256DFF]/10 flex items-center justify-center text-[#256DFF] group-hover:scale-110 transition-transform">
+                                <Lightbulb className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-white font-semibold text-lg mb-1">Request Feature</h3>
+                                <p className="text-[#B4BACB]">Have an idea? Suggest a feature!</p>
+                            </div>
+                            <div className="text-[#256DFF]">Feature Request</div>
                         </a>
                     </div>
                 </div>
@@ -64,7 +80,7 @@ export function Support() {
 
                     <div className="w-full grid gap-4">
                         <a
-                            href="mailto:support@rhytmo.app"
+                            href="mailto:rhytmo@allansrc.com.br"
                             className="flex items-center gap-4 p-4 rounded-xl bg-[#0C1020] border border-[#256DFF]/10 active:scale-[0.98] transition-all"
                         >
                             <div className="w-10 h-10 rounded-full bg-[#256DFF]/10 flex items-center justify-center text-[#256DFF]">
@@ -72,12 +88,12 @@ export function Support() {
                             </div>
                             <div className="flex-1 text-left">
                                 <h3 className="text-white font-medium">Email Support</h3>
-                                <p className="text-[#B4BACB] text-xs">support@rhytmo.app</p>
+                                <p className="text-[#B4BACB] text-xs">rhytmo@allansrc.com.br</p>
                             </div>
                         </a>
 
                         <a
-                            href="https://github.com/rhytmoapp/rhytmoapp.github.io/issues"
+                            href="https://github.com/rhytmoapp/rhytmoapp.github.io/issues/new?labels=bug&template=bug_report.md"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-4 p-4 rounded-xl bg-[#0C1020] border border-[#256DFF]/10 active:scale-[0.98] transition-all"
@@ -88,6 +104,21 @@ export function Support() {
                             <div className="flex-1 text-left">
                                 <h3 className="text-white font-medium">Report Issues</h3>
                                 <p className="text-[#B4BACB] text-xs">GitHub Issues</p>
+                            </div>
+                        </a>
+
+                        <a
+                            href="https://github.com/rhytmoapp/rhytmoapp.github.io/issues/new?labels=enhancement&template=feature_request.md"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-4 p-4 rounded-xl bg-[#0C1020] border border-[#256DFF]/10 active:scale-[0.98] transition-all"
+                        >
+                            <div className="w-10 h-10 rounded-full bg-[#256DFF]/10 flex items-center justify-center text-[#256DFF]">
+                                <Lightbulb className="w-5 h-5" />
+                            </div>
+                            <div className="flex-1 text-left">
+                                <h3 className="text-white font-medium">Request Feature</h3>
+                                <p className="text-[#B4BACB] text-xs">Feature Request</p>
                             </div>
                         </a>
                     </div>
