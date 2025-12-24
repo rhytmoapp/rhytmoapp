@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
+import React from 'react';
 import { Metronome } from './components/Metronome';
 import { PomodoroTimer } from './components/PomodoroTimer';
 import { History } from './components/History';
+import { Support } from './components/Support';
 import { AppLogo } from './components/AppLogo';
-import { Timer, Activity, BarChart3 } from 'lucide-react';
+import { Timer, Activity, BarChart3, MessageSquare } from 'lucide-react';
 import { AppProvider, useAppContext } from './context/AppContext';
 
-type Tab = 'metronome' | 'pomodoro' | 'history';
-
-function AppContent() {
-  const [activeTab, setActiveTab] = useState<Tab>('pomodoro');
+function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const activeTab = location.pathname.substring(1) || 'pomodoro';
   const { setIsPomodoroRunning, setIsMetronomeRunning } = useAppContext();
+
+  const handleNavClick = () => {
+    setIsPomodoroRunning(false);
+    setIsMetronomeRunning(false);
+  };
 
   return (
     <>
@@ -23,9 +29,10 @@ function AppContent() {
             <h1 className="text-white text-center mt-4 text-sm font-medium">Rhytmo</h1>
           </div>
 
-          <nav className="flex-1 px-4">
-            <button
-              onClick={() => setActiveTab('metronome')}
+          <nav className="flex-1 px-4 flex flex-col">
+            <Link
+              to="/metronome"
+              onClick={handleNavClick}
               className={`w-full flex flex-col items-center gap-2 px-2 py-2 rounded-xl mb-2 transition-all ${activeTab === 'metronome'
                 ? 'bg-[#256DFF] text-white shadow-lg shadow-[#256DFF]/20'
                 : 'text-[#B4BACB] hover:bg-[#0C1020]'
@@ -33,10 +40,11 @@ function AppContent() {
             >
               <Activity className="w-6 h-6" />
               <span className="text-xs">Metronome</span>
-            </button>
+            </Link>
 
-            <button
-              onClick={() => setActiveTab('pomodoro')}
+            <Link
+              to="/pomodoro"
+              onClick={handleNavClick}
               className={`w-full flex flex-col items-center gap-2 px-2 py-2 rounded-xl mb-2 transition-all ${activeTab === 'pomodoro'
                 ? 'bg-[#256DFF] text-white shadow-lg shadow-[#256DFF]/20'
                 : 'text-[#B4BACB] hover:bg-[#0C1020]'
@@ -44,14 +52,11 @@ function AppContent() {
             >
               <Timer className="w-6 h-6" />
               <span className="text-xs">Pomodoro</span>
-            </button>
+            </Link>
 
-            <button
-              onClick={() => {
-                setActiveTab('history');
-                setIsPomodoroRunning(false);
-                setIsMetronomeRunning(false);
-              }}
+            <Link
+              to="/history"
+              onClick={handleNavClick}
               className={`w-full flex flex-col items-center gap-2 px-2 py-2 rounded-xl mb-2 transition-all ${activeTab === 'history'
                 ? 'bg-[#256DFF] text-white shadow-lg shadow-[#256DFF]/20'
                 : 'text-[#B4BACB] hover:bg-[#0C1020]'
@@ -59,7 +64,22 @@ function AppContent() {
             >
               <BarChart3 className="w-6 h-6" />
               <span className="text-xs">History</span>
-            </button>
+            </Link>
+
+            <div className="flex-1" />
+
+            {/* Support Link at Bottom */}
+            <Link
+              to="/support"
+              onClick={handleNavClick}
+              className={`w-full flex flex-col items-center gap-2 px-2 py-2 rounded-xl mb-2 transition-all ${activeTab === 'support'
+                ? 'bg-[#256DFF] text-white shadow-lg shadow-[#256DFF]/20'
+                : 'text-[#B4BACB] hover:bg-[#0C1020]'
+                }`}
+            >
+              <MessageSquare className="w-6 h-6" />
+              <span className="text-xs">Support</span>
+            </Link>
           </nav>
 
           <div className="p-6 border-t border-[#256DFF]/20">
@@ -72,9 +92,7 @@ function AppContent() {
         {/* Main Content Area */}
         <main className="flex-1 flex items-center justify-center p-12">
           <div className="w-full max-w-5xl">
-            {activeTab === 'metronome' && <Metronome />}
-            {activeTab === 'pomodoro' && <PomodoroTimer />}
-            {activeTab === 'history' && <History />}
+            {children}
           </div>
         </main>
       </div>
@@ -92,17 +110,16 @@ function AppContent() {
         {/* Main Content */}
         <main className="flex-1 px-4 pb-24 overflow-y-auto">
           <div className="bg-[#161A2C] rounded-3xl shadow-2xl p-6 min-h-[500px]">
-            {activeTab === 'metronome' && <Metronome />}
-            {activeTab === 'pomodoro' && <PomodoroTimer />}
-            {activeTab === 'history' && <History />}
+            {children}
           </div>
         </main>
 
         {/* Bottom Navigation */}
         <nav className="fixed bottom-0 left-0 right-0 bg-[#161A2C]/95 backdrop-blur-sm border-t border-[#256DFF]/20 safe-area-pb">
           <div className="flex items-center justify-around px-6 py-3">
-            <button
-              onClick={() => setActiveTab('metronome')}
+            <Link
+              to="/metronome"
+              onClick={handleNavClick}
               className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${activeTab === 'metronome'
                 ? 'bg-[#256DFF] text-white'
                 : 'text-[#B4BACB]'
@@ -110,10 +127,11 @@ function AppContent() {
             >
               <Activity className="w-6 h-6" />
               <span className="text-xs">Metronome</span>
-            </button>
+            </Link>
 
-            <button
-              onClick={() => setActiveTab('pomodoro')}
+            <Link
+              to="/pomodoro"
+              onClick={handleNavClick}
               className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${activeTab === 'pomodoro'
                 ? 'bg-[#256DFF] text-white'
                 : 'text-[#B4BACB]'
@@ -121,14 +139,11 @@ function AppContent() {
             >
               <Timer className="w-6 h-6" />
               <span className="text-xs">Pomodoro</span>
-            </button>
+            </Link>
 
-            <button
-              onClick={() => {
-                setActiveTab('history');
-                setIsPomodoroRunning(false);
-                setIsMetronomeRunning(false);
-              }}
+            <Link
+              to="/history"
+              onClick={handleNavClick}
               className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${activeTab === 'history'
                 ? 'bg-[#256DFF] text-white'
                 : 'text-[#B4BACB]'
@@ -136,7 +151,19 @@ function AppContent() {
             >
               <BarChart3 className="w-6 h-6" />
               <span className="text-xs">History</span>
-            </button>
+            </Link>
+
+            <Link
+              to="/support"
+              onClick={handleNavClick}
+              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${activeTab === 'support'
+                ? 'bg-[#256DFF] text-white'
+                : 'text-[#B4BACB]'
+                }`}
+            >
+              <MessageSquare className="w-6 h-6" />
+              <span className="text-xs">Support</span>
+            </Link>
           </div>
         </nav>
       </div>
@@ -144,10 +171,24 @@ function AppContent() {
   );
 }
 
+function AppRoutes() {
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Navigate to="/pomodoro" replace />} />
+        <Route path="/metronome" element={<Metronome />} />
+        <Route path="/pomodoro" element={<PomodoroTimer />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/support" element={<Support />} />
+      </Routes>
+    </Layout>
+  );
+}
+
 export default function App() {
   return (
     <AppProvider>
-      <AppContent />
+      <AppRoutes />
     </AppProvider>
   );
 }
